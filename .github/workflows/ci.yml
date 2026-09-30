@@ -1,0 +1,26 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        cc: [gcc, clang]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build (warnings are errors)
+        run: make CC=${{ matrix.cc }} CFLAGS="-O2 -g -Werror"
+      - name: Unit tests
+        run: make CC=${{ matrix.cc }} test
+      - name: Sanitizers (ASan + UBSan)
+        run: make CC=${{ matrix.cc }} asan
+      # Exit codes 1 and 2 report the runner's health (e.g. pending updates),
+      # not a bug, so only 3+ fails. Actions runs bash with -e, hence `||`.
+      - name: Smoke run
+        run: ./ubhealth --verbose || test $? -le 2
+      - name: JSON is valid
+        run: |
+          ./ubhealth --json > report.json || test $? -le 2
+          python3 -m json.tool report.json > /dev/null

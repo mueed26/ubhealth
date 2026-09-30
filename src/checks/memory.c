@@ -1,6 +1,6 @@
 #include "ubhealth.h"
 
-/* Extract MemTotal and MemAvailable (both in kB) from /proc/meminfo. */
+//* Extract MemTotal and MemAvailable from /proc/meminfo
 int parse_meminfo(FILE *f, unsigned long *total_kb, unsigned long *avail_kb)
 {
     char line[256];

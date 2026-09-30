@@ -22,7 +22,7 @@ void check_load(const config_t *cfg, check_result_t *out)
     if (cpus < 1)
         cpus = 1;
 
-    /* the 5-minute average ignores short spikes but still reacts quickly */
+    // the 5-minute average ignores short spikes but still reacts quicklyyyyy 
     double per_cpu = load[1] / (double)cpus;
     result_set(out, classify(per_cpu, cfg->load_warn_per_cpu, cfg->load_crit_per_cpu),
                "Load %.2f %.2f %.2f across %ld CPU(s)", load[0], load[1], load[2], cpus);
