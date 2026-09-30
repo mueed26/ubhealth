@@ -1,0 +1,29 @@
+name: ubhealth
+base: core24
+version: '0.1.0'
+summary: Quick health report for Ubuntu systems
+description: |
+  ubhealth checks disk usage, memory, load, pending updates, failed systemd
+  units and pending reboots, then prints a colour report or JSON.
+  Exit codes (0 ok, 1 warn, 2 crit) make it easy to use from scripts and cron.
+
+grade: devel
+# devmode for now: strict confinement cannot run apt-check or read host
+# systemd state without extra interfaces. See ROADMAP.md, task 4.
+confinement: devmode
+
+apps:
+  ubhealth:
+    command: usr/local/bin/ubhealth
+    plugs:
+      - system-observe
+      - mount-observe
+      - network-observe
+
+parts:
+  ubhealth:
+    plugin: make
+    source: .
+    build-packages:
+      - gcc
+      - make
