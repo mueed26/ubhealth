@@ -8,6 +8,7 @@ const check_t CHECKS[] = {
     { "updates",  "Pending apt and security updates", check_updates },
     { "services", "Failed systemd units",            check_services },
     { "reboot",   "Reboot required after updates",   check_reboot },
+    { "ports",    "TCP ports exposed on all interfaces", check_ports },
 };
 
 const size_t CHECK_COUNT = sizeof CHECKS / sizeof CHECKS[0];
