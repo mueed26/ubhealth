@@ -1,0 +1,6 @@
+build/
+/ubhealth
+*.snap
+parts/
+stage/
+prime/
